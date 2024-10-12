@@ -1,17 +1,29 @@
 <!-- reposit/templates/reposit/gallery_list.html -->
 
-{% extends 'base.html' %}
+{% extends 'dashbase.html' %}
 
 {% block content %}
-
 <h1>Galerias por Ano</h1>
 <ul>
   {% for year in years %}
-    <li><a href="{% url 'gallery_by_year' year=year.year %}">{{ year.year }} ({{ year.count }})</a></li>
+    <li><a href="{% url 'reposit_n1:gallery_by_year' year=year.year %}">{{ year.year }} ({{ year.count }})</a></li>
   {% empty %}
     <li>Nenhuma galeria encontrada.</li>
   {% endfor %}
 </ul>
 
+<h2>Galerias</h2>
+<ul>
+  {% for gallery in galleries %}
+    <li>
+      <a href="{% url 'reposit_n1:gallery_detail' gallery_id=gallery.id %}">
+        {{ gallery.title }} - {{ gallery.event_date }}
+      </a>
+    </li>
+  {% empty %}
+    <li>Nenhuma galeria disponível.</li>
+  {% endfor %}
+</ul>
 
 {% endblock %}
+

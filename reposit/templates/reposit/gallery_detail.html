@@ -49,6 +49,8 @@
         <div class="comment">
             <p>{{ comment.user.username }}: {{ comment.content }}</p>
         </div>
+    {% empty %}
+        <p>Nenhum comentário disponível.</p>
     {% endfor %}
 </div>
 
@@ -63,7 +65,7 @@
 
 {% block extra_js %}
     <script>
-        const csrftoken = '{{ csrf_token }}';  // Pega o token no template Django
+        const csrftoken = '{{ csrf_token }}';
         // Adicione seu código JavaScript aqui
     </script>
 {% endblock %}

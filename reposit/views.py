@@ -1,7 +1,7 @@
 # reposit/views.py
 
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Gallery, Image, Comment
 
@@ -9,7 +9,7 @@ from .models import Gallery, Image, Comment
 def gallery_list(request):
     galleries = Gallery.objects.all()
     years = galleries.dates('event_date', 'year', order='DESC')
-    return render(request, 'reposit/gallery_list.html', {'years': years})
+    return render(request, 'reposit/gallery_list.html', {'years': years, 'galleries': galleries})
 
 # Exibir todas as galerias de um ano específico
 def gallery_by_year(request, year):
@@ -19,8 +19,6 @@ def gallery_by_year(request, year):
 # Visualizar detalhes da galeria, incluindo imagens, likes e comentários
 def gallery_detail(request, gallery_id):
     gallery = get_object_or_404(Gallery, id=gallery_id)
-    images = gallery.images.all()
-    comments = gallery.comments.all()
 
     if request.method == 'POST':
         # Processar comentário
@@ -28,26 +26,22 @@ def gallery_detail(request, gallery_id):
         if comment_content:
             comment = Comment(gallery=gallery, user=request.user, content=comment_content)
             comment.save()
-            return redirect('gallery_detail', gallery_id=gallery.id)
+            return redirect('reposit_n1:gallery_detail', gallery_id=gallery.id)
 
     return render(request, 'reposit/gallery_detail.html', {
         'gallery': gallery,
-        'images': images,
-        'comments': comments
     })
 
 # Processar o like de uma imagem via requisição AJAX
-@csrf_exempt  # Exime a view da verificação de CSRF para facilitar as requisições via AJAX
+@csrf_exempt
 def like_image(request, image_id):
     if request.method == 'POST':
-        # Obtém a imagem com base no ID passado
-        image = get_object_or_404(Image, id=image_id)
-        
-        # Incrementa o número de likes
-        image.likes += 1
-        image.save()
-
-        # Retorna o número atualizado de likes no formato JSON
-        return JsonResponse({'likes': image.likes})
+        try:
+            image = get_object_or_404(Image, id=image_id)
+            image.likes += 1
+            image.save()
+            return JsonResponse({'likes': image.likes})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
 
     return JsonResponse({'error': 'Invalid request'}, status=400)

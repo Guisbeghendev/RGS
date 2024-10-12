@@ -15,7 +15,7 @@ Incluindo outro URLconf
     2. Adicione um URL aos urlpatterns: path('blog/', include('blog.urls'))
 """
 
-#urls.py do principal GuiSbeghen
+# urls.py do projeto principal
 
 from django.contrib import admin
 from django.urls import path, include
@@ -23,15 +23,16 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),  # Inclui as URLs do subapp home
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('autenticad/', include('autenticad.urls')),
-    path('reposit/', include('reposit.urls')),  # Inclui as URLs do subapp reposit
-    
-#dar essa linha de espaço
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+    # Repositório Nível 1
+    path('reposit/n1/', include('reposit.urls', namespace='reposit_n1')),
+
+    # Preparação para os outros níveis (futuro)
+    # path('reposit/n2/', include('reposit_n2.urls', namespace='reposit_n2')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
