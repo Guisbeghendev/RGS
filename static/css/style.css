@@ -133,3 +133,15 @@ body {
     background-color: #007bff; 
     color: #000000; 
 }
+
+
+/* estilo para galerias */
+.image-card {
+    margin-bottom: 15px; /* Espaçamento entre os cards */
+    text-align: center; /* Centraliza o texto no card */
+}
+
+.image-card img {
+    width: 100%; /* Faz as imagens ocuparem 100% do espaço do card */
+    height: auto; /* Mantém a proporção da imagem */
+}

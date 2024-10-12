@@ -13,7 +13,7 @@ class Gallery(models.Model):
     watermark = models.ForeignKey('Watermark', null=True, blank=True, on_delete=models.SET_NULL)  # Marca d'água opcional
 
     def update_total_likes(self):
-        """Atualiza o total de likes da galeria com base nas imagens relacionadas."""
+        """Atualiza o total de likes da galeria com base nas imagens relacionadas.""" 
         self.total_likes = sum(image.likes for image in self.images.all())
         self.save()
 
@@ -46,4 +46,3 @@ class Watermark(models.Model):
 
     def __str__(self):
         return self.name
-

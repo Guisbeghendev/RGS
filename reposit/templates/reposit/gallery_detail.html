@@ -8,20 +8,24 @@
 <p>{{ gallery.description }}</p>
 <p>Total de likes: {{ gallery.total_likes }}</p>
 
-<h2>Imagens</h2>
-<div class="gallery-images">
-    {% for image in gallery.images.all %}  {# Use gallery.images.all para acessar as imagens relacionadas à galeria #}
-        <div class="image-card">
-            <img src="{{ image.image.url }}" alt="{{ image.title }}">  {# Corrija a referência da URL da imagem #}
-            <button class="like-button" data-image-id="{{ image.id }}">Like</button>
-            <span id="likes-count-{{ image.id }}">{{ image.likes }}</span> likes
+<h2>Galeria</h2>
+<div class="row gallery-images">
+    {% for image in gallery.images.all %}
+        <div class="col-6 col-md-4 col-lg-3">  {# 6 colunas em telas pequenas, 4 em médias e 3 em grandes #}
+            <div class="image-card">
+                <a href="{{ image.image.url }}" data-lightbox="gallery" data-title="{{ image.title }}">
+                    <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid">  {# img-fluid para responsividade #}
+                </a>
+                <button class="like-button btn btn-light" data-image-id="{{ image.id }}">Like</button>
+                <span id="likes-count-{{ image.id }}">{{ image.likes }}</span> likes
+            </div>
         </div>
     {% endfor %}
 </div>
 
 <h2>Comentários</h2>
 <div class="comments-section">
-    {% for comment in gallery.comments.all %}  {# Use gallery.comments.all para acessar os comentários relacionados à galeria #}
+    {% for comment in gallery.comments.all %}
         <div class="comment">
             <p>{{ comment.user.username }}: {{ comment.content }}</p>
         </div>
@@ -31,8 +35,8 @@
 <!-- Formulário de comentários -->
 <form method="POST">
     {% csrf_token %}
-    <textarea name="comment" placeholder="Deixe seu comentário"></textarea>
-    <button type="submit">Comentar</button>
+    <textarea name="comment" placeholder="Deixe seu comentário" class="form-control mb-2"></textarea>
+    <button type="submit" class="btn btn-primary">Comentar</button>
 </form>
 
 {% endblock %}
@@ -40,28 +44,6 @@
 {% block extra_js %}
     <script>
         const csrftoken = '{{ csrf_token }}';  // Pega o token no template Django
-    </script>
-
-    <script>
-        document.querySelectorAll('.like-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const imageId = this.dataset.imageId;
-
-                fetch(`/like/${imageId}/`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': csrftoken,
-                        'Content-Type': 'application/json',
-                    },
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.likes) {
-                        const likesCount = document.querySelector(`#likes-count-${imageId}`);
-                        likesCount.innerText = data.likes;  // Atualiza o contador de likes
-                    }
-                });
-            });
-        });
+        // Adicione seu código JavaScript aqui
     </script>
 {% endblock %}
