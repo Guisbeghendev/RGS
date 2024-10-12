@@ -1,7 +1,27 @@
-<!-- dashboard/templates/dashboard/dashboard_home.html -->
+<!-- dashboard/templates/dashboard/dashboard.html -->
 {% extends 'dashbase.html' %}
 
 {% block content %}
 <h1>Bem-vindo(a), {{ user.nickname }}! <br>Aqui está sua Dashboard!</h1>
 <p>Aqui você poderá acessar suas informações de perfil e outros recursos.</p>
+<br>
+
+<!-- Exibir galerias que o usuário pode acessar -->
+<h2>Galerias disponíveis:</h2>
+<div class="row">
+    {% for gallery in user_galleries %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ gallery.title }}</h5>
+                    <p class="card-text">{{ gallery.description }}</p>
+                    <a href="{% url 'reposit_n1:gallery_detail' gallery.id %}" class="btn btn-primary">Ver Galeria</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>Você não tem acesso a nenhuma galeria no momento.</p>
+    {% endfor %}
+</div>
+
 {% endblock %}
