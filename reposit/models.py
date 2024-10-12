@@ -1,8 +1,20 @@
 # reposit/models.py
 
+# reposit/models.py
+
 from django.db import models
 from django.conf import settings
 from multiupload.fields import MultiFileField  # Importando MultiFileField
+
+# Atualização da hierarquia de níveis
+HIERARCHY_LEVELS = [
+    (1, 'Básico'),
+    (2, 'Autoral'),
+    (3, 'Escola'),
+    (4, 'Ritinha'),
+    (5, 'Amigos'),
+    (6, 'Família'),
+]
 
 # Modelo da Galeria
 class Gallery(models.Model):
@@ -11,6 +23,7 @@ class Gallery(models.Model):
     event_date = models.DateField()  # Data do evento representado pela galeria
     total_likes = models.PositiveIntegerField(default=0)  # Somatória dos likes de todas as imagens
     watermark = models.ForeignKey('Watermark', null=True, blank=True, on_delete=models.SET_NULL)  # Marca d'água opcional
+    level = models.PositiveSmallIntegerField(choices=HIERARCHY_LEVELS, default=1)  # Adicionando o campo level
 
     def update_total_likes(self):
         """Atualiza o total de likes da galeria com base nas imagens relacionadas.""" 
