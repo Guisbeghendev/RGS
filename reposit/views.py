@@ -2,43 +2,58 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
+from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from .models import Gallery, Image, Comment
 
 # Listagem de anos com galerias
 def gallery_list(request):
-    user_level = request.user.level if request.user.is_authenticated else 1  # Pega o nível do usuário logado
-    galleries = Gallery.objects.filter(level__lte=user_level)  # Filtra galerias com base no nível do usuário
+    user_level = request.user.level if request.user.is_authenticated else 1
+    galleries = Gallery.objects.filter(level__lte=user_level)
     years = galleries.dates('event_date', 'year', order='DESC')
-    return render(request, 'reposit/gallery_list.html', {'years': years, 'galleries': galleries})
 
-# Exibir todas as galerias de um ano específico
+    # Paginação dos anos
+    paginator = Paginator(years, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'reposit/gallery_list.html', {
+        'page_obj': page_obj, 
+        'galleries': galleries
+    })
+
+# Exibir todas as galerias de um ano específico com paginação
 def gallery_by_year(request, year):
     user_level = request.user.level if request.user.is_authenticated else 1
     galleries = Gallery.objects.filter(event_date__year=year, level__lte=user_level)
-    return render(request, 'reposit/gallery_by_year.html', {'galleries': galleries, 'year': year})
 
-# Visualizar detalhes da galeria, incluindo imagens, likes e comentários
+    # Paginação das galerias do ano
+    paginator = Paginator(galleries, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'reposit/gallery_by_year.html', {
+        'page_obj': page_obj, 
+        'year': year
+    })
+
+# Visualizar detalhes da galeria
 def gallery_detail(request, gallery_id):
     gallery = get_object_or_404(Gallery, id=gallery_id)
     user_level = request.user.level if request.user.is_authenticated else 1
 
-    if gallery.level > user_level:  # Verifica se a galeria está acessível para o nível do usuário
-        return render(request, 'reposit/403.html')  # Redireciona para uma página de acesso negado, por exemplo
+    if gallery.level > user_level:
+        return render(request, 'reposit/403.html')
 
     if request.method == 'POST':
-        # Processar comentário
         comment_content = request.POST.get('comment')
         if comment_content:
-            comment = Comment(gallery=gallery, user=request.user, content=comment_content)
-            comment.save()
-            return redirect('reposit_n1:gallery_detail', gallery_id=gallery.id)  # Use o namespace aqui
+            Comment.objects.create(gallery=gallery, user=request.user, content=comment_content)
+            return redirect('reposit_n1:gallery_detail', gallery_id=gallery.id)
 
-    return render(request, 'reposit/gallery_detail.html', {
-        'gallery': gallery,
-    })
+    return render(request, 'reposit/gallery_detail.html', {'gallery': gallery})
 
-# Processar o like de uma imagem via requisição AJAX
+# Processar o like de uma imagem via AJAX
 @csrf_exempt
 def like_image(request, image_id):
     if request.method == 'POST':
@@ -51,3 +66,4 @@ def like_image(request, image_id):
             return JsonResponse({'error': str(e)}, status=400)
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
+

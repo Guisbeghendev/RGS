@@ -4,26 +4,37 @@
 
 {% block content %}
 <h1>Galerias por Ano</h1>
+
+<!-- Paginação dos anos -->
 <ul>
-  {% for year in years %}
-    <li><a href="{% url 'reposit_n1:gallery_by_year' year=year.year %}">{{ year.year }} ({{ year.count }})</a></li>
+  {% for year in page_obj %}
+    <li>
+      <a href="{% url 'reposit_n1:gallery_by_year' year=year.year %}">
+        {{ year.year }}
+      </a>
+    </li>
   {% empty %}
     <li>Nenhuma galeria encontrada.</li>
   {% endfor %}
 </ul>
 
-<h2>Galerias</h2>
-<ul>
-  {% for gallery in galleries %}
-    <li>
-      <a href="{% url 'reposit_n1:gallery_detail' gallery_id=gallery.id %}">
-        {{ gallery.title }} - {{ gallery.event_date }}
-      </a>
-    </li>
-  {% empty %}
-    <li>Nenhuma galeria disponível.</li>
-  {% endfor %}
-</ul>
+<div class="pagination">
+  <span class="step-links">
+    {% if page_obj.has_previous %}
+      <a href="?page=1">&laquo; Primeira</a>
+      <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+    {% endif %}
+
+    <span class="current">
+      Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+    {% endif %}
+  </span>
+</div>
 
 {% endblock %}
 
