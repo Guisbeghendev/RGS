@@ -145,3 +145,16 @@ body {
     width: 100%; /* Faz as imagens ocuparem 100% do espaço do card */
     height: auto; /* Mantém a proporção da imagem */
 }
+.modal {
+    background-color: rgba(0, 0, 0, 0.8); /* Fundo preto com transparência */
+}
+
+.modal-content {
+    background-color: transparent; /* Tornar o conteúdo do modal transparente */
+    border: none; /* Remover borda */
+}
+
+.modal-header,
+.modal-footer {
+    border: none; /* Remover bordas do cabeçalho e rodapé */
+}
