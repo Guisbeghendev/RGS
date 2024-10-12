@@ -1,0 +1,67 @@
+<!-- reposit/templates/reposit/gallery_detail.html -->
+
+{% extends 'dashbase.html' %}
+
+{% block content %}
+<h1>{{ gallery.title }}</h1>
+<p>Data do evento: {{ gallery.event_date }}</p>
+<p>{{ gallery.description }}</p>
+<p>Total de likes: {{ gallery.total_likes }}</p>
+
+<h2>Imagens</h2>
+<div class="gallery-images">
+    {% for image in gallery.images.all %}  {# Use gallery.images.all para acessar as imagens relacionadas à galeria #}
+        <div class="image-card">
+            <img src="{{ image.image.url }}" alt="{{ image.title }}">  {# Corrija a referência da URL da imagem #}
+            <button class="like-button" data-image-id="{{ image.id }}">Like</button>
+            <span id="likes-count-{{ image.id }}">{{ image.likes }}</span> likes
+        </div>
+    {% endfor %}
+</div>
+
+<h2>Comentários</h2>
+<div class="comments-section">
+    {% for comment in gallery.comments.all %}  {# Use gallery.comments.all para acessar os comentários relacionados à galeria #}
+        <div class="comment">
+            <p>{{ comment.user.username }}: {{ comment.content }}</p>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Formulário de comentários -->
+<form method="POST">
+    {% csrf_token %}
+    <textarea name="comment" placeholder="Deixe seu comentário"></textarea>
+    <button type="submit">Comentar</button>
+</form>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        const csrftoken = '{{ csrf_token }}';  // Pega o token no template Django
+    </script>
+
+    <script>
+        document.querySelectorAll('.like-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const imageId = this.dataset.imageId;
+
+                fetch(`/like/${imageId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.likes) {
+                        const likesCount = document.querySelector(`#likes-count-${imageId}`);
+                        likesCount.innerText = data.likes;  // Atualiza o contador de likes
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

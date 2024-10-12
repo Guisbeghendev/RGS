@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Login</h2>
+{% if messages %}
+    <div class="alert alert-info">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="nickname">Nome de Usuário (Nickname):</label>
+        <input type="text" name="nickname" class="form-control" id="nickname" required>
+        {% if form.nickname.errors %}
+            <div class="alert alert-danger">{{ form.nickname.errors }}</div>
+        {% endif %}
+    </div>
+    <div class="form-group">
+        <label for="password">Senha:</label>
+        <input type="password" name="password" class="form-control" id="password" required>
+        {% if form.password.errors %}
+            <div class="alert alert-danger">{{ form.password.errors }}</div>
+        {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary">Entrar</button>
+</form>
+<a href="{% url 'register' %}">Não tem uma conta? Registre-se aqui.</a>
+{% endblock %}

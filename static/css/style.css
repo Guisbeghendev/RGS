@@ -1,0 +1,135 @@
+/* css unico para todo o projeto */
+
+/* Estilos comuns usados no base.html */
+/* body */
+body { 
+    background-color: white !important;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Área do logo */
+.header {
+    background-color: black; 
+    height: 250px;
+    width: 100%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;  
+    margin-top: 30px;
+    margin-bottom: 0px; 
+}
+
+/* Menu principal feito com Bootstrap */
+.menuprincipal{
+    background-color: #343a40;
+    padding: 10px 0;
+    display: flex;              /* Usar flexbox para dispor os itens em linha */
+    justify-content: space-around; /* Distribui os itens com espaço igual ao redor */
+    flex-wrap: wrap;           /* Permite que os itens quebrem a linha se não houver espaço suficiente */
+    padding: 10px;             /* Adicione algum padding, se necessário */
+    margin-top: 0px;
+    width: 600px;
+    align-items: center;
+}
+.menuprincipal .navbar {
+    background-color: #000000;
+}
+.menuprincipal .nav-link {
+    color: #ffffff; 
+    font-weight: bold;
+}
+.menuprincipal .nav-link:hover {
+    background-color: #ffffff;
+    color: #000000; 
+}
+.menuprincipal .nav-link.active,
+.menuprincipal .nav-link:focus {
+    background-color: #007bff; 
+    color: #000000; 
+}
+
+/* Área do conteúdo principal */
+.main-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    padding: 1%;
+    box-sizing: border-box;
+}
+.conteudo{
+    background-color: #fff;
+    padding: 5%;
+}
+
+/* Seção no conteúdo principal */
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 2rem;
+}
+.section img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+.section h1 {
+    margin-bottom: 1rem;
+}
+.section p {
+    text-align: justify;
+    line-height: 1.6;
+}
+
+/* Rodapé/footer */
+.footer {
+    display: flex;
+    justify-content: space-around;
+    color: #fff;
+    padding: 3rem;
+    width: 100%;
+}
+
+/* Estilos específicos para o dashboard */
+.dashboard-content {
+    flex-grow: 1;
+    padding: 1%;
+    box-sizing: border-box;
+}
+
+/* Estilos do novo menu para o dashmenu.html */
+.dashmenu {
+    background-color: #343a40;
+    padding: 10px 0;
+    display: flex;              /* Usar flexbox para dispor os itens em linha */
+    justify-content: space-around; /* Distribui os itens com espaço igual ao redor */
+    flex-wrap: wrap;           /* Permite que os itens quebrem a linha se não houver espaço suficiente */
+    padding: 10px;             /* Adicione algum padding, se necessário */
+    margin-top: 0px;
+    width: 600px;
+    align-items: center;
+}
+.dashmenu .navbar {
+    background-color: #000000;
+}
+.dashmenu .nav-link {
+    color: #ffffff; 
+    font-weight: bold;
+}
+.dashmenu .nav-link:hover {
+    background-color: #ffffff;
+    color: #000000; 
+}
+.dashmenu .nav-link.active,
+.dashmenu .nav-link:focus {
+    background-color: #007bff; 
+    color: #000000; 
+}

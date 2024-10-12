@@ -1,0 +1,19 @@
+<!--# reposit/templates/reposit/gallery_date.html   -->
+
+{% extends 'dashbase.html' %}
+
+{% block content %}
+
+<h1>Galerias de {{ year }}</h1>
+<a href="?order=asc">Ordem Crescente</a> | <a href="?order=desc">Ordem Decrescente</a>
+<ul>
+  {% for gallery in galleries %}
+    <li><a href="{% url 'gallery_detail' gallery.id %}">{{ gallery.title }} - {{ gallery.event_date }}</a></li>
+  {% empty %}
+    <li>Não há galerias para este ano.</li>
+  {% endfor %}
+</ul>
+
+
+<a href="{% url 'galeria_list' %}">Voltar para a lista de anos</a>
+{% endblock %}

@@ -1,0 +1,17 @@
+<!-- reposit/templates/reposit/gallery_list.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Galerias por Ano</h1>
+<ul>
+  {% for year in years %}
+    <li><a href="{% url 'gallery_by_year' year=year.year %}">{{ year.year }} ({{ year.count }})</a></li>
+  {% empty %}
+    <li>Nenhuma galeria encontrada.</li>
+  {% endfor %}
+</ul>
+
+
+{% endblock %}
