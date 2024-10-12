@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import CustomUser  # Import do modelo CustomUser
 from reposit.models import Gallery  # Import do modelo Gallery
+from django.db.models import Q  # Import para consultas complexas
 
 def register(request):
     if request.method == 'POST':
@@ -46,12 +47,26 @@ def user_logout(request):
 
 @login_required
 def dashboard(request):
-    # Filtrar galerias disponíveis para o usuário
-    user_galleries = Gallery.objects.filter(level__lte=request.user.level).order_by('level')
+    # Nível do usuário autenticado
+    user_level = request.user.level
+
+    # Obter termos de pesquisa via GET
+    search_query = request.GET.get('search', '')
+    date_query = request.GET.get('date', '')
+
+    # Base: filtrar galerias pelo nível do usuário
+    user_galleries = Gallery.objects.filter(level__lte=user_level)
+
+    # Aplicar filtros adicionais se houver pesquisa
+    if search_query:
+        user_galleries = user_galleries.filter(title__icontains=search_query)
+
+    if date_query:
+        user_galleries = user_galleries.filter(event_date=date_query)
 
     # Log para depuração (remover em produção)
     print(f"Usuário: {request.user.nickname}, Nível: {request.user.level}")
-    print(f"Galerias disponíveis: {[g.title for g in user_galleries]}")
+    print(f"Galerias encontradas: {[g.title for g in user_galleries]}")
 
     return render(request, 'autenticad/dashboard.html', {
         'user_galleries': user_galleries

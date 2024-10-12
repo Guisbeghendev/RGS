@@ -1,9 +1,30 @@
-<!-- dashboard/templates/dashboard/dashboard.html -->
-
-<!-- dashboard/templates/dashboard/dashboard.html -->
+<!-- templates/autenticad/dashboard.html -->
 {% extends 'dashbase.html' %}
 
 {% block content %}
+
+<br>
+
+<!-- Campo de pesquisa de galerias -->
+<form method="GET" action="{% url 'dashboard' %}" class="mb-4">
+    <div class="form-row">
+        <div class="col-md-5">
+            <input type="text" name="search" class="form-control" 
+                   placeholder="Buscar por nome da galeria..." value="{{ request.GET.search }}">
+        </div>
+        <div class="col-md-3">
+            <input type="date" name="date" class="form-control" value="{{ request.GET.date }}">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Pesquisar</button>
+        </div>
+    </div>
+</form>
+
+
+<br>
+
+
 <h1>Bem-vindo(a), {{ user.nickname }}! <br>Aqui está sua Dashboard!</h1>
 <p>Aqui você poderá acessar suas informações de perfil e outros recursos.</p>
 <br>
@@ -29,4 +50,3 @@
 </div>
 
 {% endblock %}
-
