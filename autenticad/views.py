@@ -5,7 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import CustomUser  # Certifique-se de importar seu modelo CustomUser
-from reposit.models import Gallery  # Substitua 'your_app' pelo nome do seu aplicativo onde o modelo Gallery está definido
+from reposit.models import Gallery  # Importa o modelo Gallery do subapp reposit
 
 def register(request):
     if request.method == 'POST':
@@ -32,7 +32,7 @@ def user_login(request):
         if user and user.check_password(password):
             login(request, user)
             messages.success(request, 'Login realizado com sucesso!')
-            return redirect('dashboard')  # Aqui você está redirecionando para a URL correta
+            return redirect('dashboard')  # Redireciona para a URL correta
         else:
             messages.error(request, 'Nome de usuário ou senha inválidos.')
 
@@ -46,7 +46,8 @@ def user_logout(request):
 
 @login_required
 def dashboard(request):
-    user_galleries = Gallery.objects.filter(level__lte=request.user.level)  # Filtrar galerias acessíveis ao usuário
+    # Filtrar galerias acessíveis ao usuário
+    user_galleries = Gallery.objects.filter(level__lte=request.user.level)  
     return render(request, 'autenticad/dashboard.html', {
         'user_galleries': user_galleries  # Passar as galerias para o template
     })

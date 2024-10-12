@@ -1,4 +1,6 @@
 <!-- dashboard/templates/dashboard/dashboard.html -->
+
+<!-- dashboard/templates/dashboard/dashboard.html -->
 {% extends 'dashbase.html' %}
 
 {% block content %}
@@ -10,18 +12,21 @@
 <h2>Galerias disponíveis:</h2>
 <div class="row">
     {% for gallery in user_galleries %}
-        <div class="col-md-4">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h5 class="card-title">{{ gallery.title }}</h5>
-                    <p class="card-text">{{ gallery.description }}</p>
-                    <a href="{% url 'reposit_n1:gallery_detail' gallery.id %}" class="btn btn-primary">Ver Galeria</a>
+        {% if gallery.level <= user.user_level %}  <!-- Verifica se o nível da galeria é menor ou igual ao nível do usuário -->
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ gallery.title }}</h5>
+                        <p class="card-text">{{ gallery.description }}</p>
+                        <a href="{% url 'reposit_n1:gallery_detail' gallery.id %}" class="btn btn-primary">Ver Galeria</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     {% empty %}
         <p>Você não tem acesso a nenhuma galeria no momento.</p>
     {% endfor %}
 </div>
 
 {% endblock %}
+

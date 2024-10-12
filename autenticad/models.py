@@ -41,9 +41,10 @@ class CustomUser(AbstractUser):
     
     level = models.PositiveSmallIntegerField(choices=HIERARCHY_LEVELS, default=1)  # Definindo o nível padrão como 1
     
+    user_level = models.PositiveSmallIntegerField(choices=HIERARCHY_LEVELS, default=1)  # Novo campo user_level
+    
     nickname = models.CharField(max_length=30, unique=True)  # Campo nickname obrigatório e único
     
-    # Adicione related_name para evitar conflitos
     groups = models.ManyToManyField(
         Group,
         related_name='customuser_set',  # Nome relacionado para o acesso reverso
