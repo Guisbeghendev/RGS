@@ -5,7 +5,16 @@
 {% block title %}Página Inicial{% endblock %}
 
 {% block content %}
-    <h1>Bem-vindo à página inicial!</h1>
-    <p>Esta é a seção de conteúdo da página inicial.</p>
-{% endblock %}
 
+<div class="jumbotron">
+    <div class="container-fluid text-center">
+        <h1>Bem-vindo à GuiSbeghen!</h1>
+    </div>
+    <br>
+    <div class="container text-center">
+        <a href="{% url 'login' %}" class="btn btn-dark btn-lg">LOGIN</a>
+        <a href="{% url 'register' %}" class="btn btn-dark btn-lg">CADASTRE</a>
+    </div>
+</div>
+
+{% endblock %}
