@@ -3,50 +3,75 @@
 
 {% block content %}
 
-<br>
+<!--boas vindas ao visitante-->
+<div class="container text-center">
+<h6><dt>Bem-vindo(a), {{ user.nickname }}! <br>Aqui está sua Dashboard!</dt></h6>
+<p>Aqui você poderá acessar suas informações de perfil e outros recursos.</p>
+</div>
+<!--fim boas vindas ao visitante-->
+
+<!--conteudo da dashboard-->
+    <div class="jumbotron">
+
+        <!-- Exibir galerias que o usuário pode acessar -->
+        <!-- titulo pagina -->
+        <div class="conteiner-fluid bg-primary text-center font-weight-bolder text-warning">
+            <br><h4><dt>Minhas galerias disponíveis:</dt></h4><br>
+        </div>
+        <br>
+        <!--galerias disponiveis-->
+        <div class="row gx-3 gy-4 justify-content-center"> <!-- Espaço reduzido entre colunas -->
+            {% for gallery in user_galleries %}
+                {% if gallery.level <= user.user_level %}
+                    <div class="col-lg-6 col-md-8 col-sm-12 mb-2">  <!-- Mais largura nas telas maiores -->
+                        <div class="card h-100 shadow-lg card-3d pulse-card">
+                            <div class="card-body p-1">  <!-- Mais espaço interno em telas grandes -->
+                                <h5 class="card-title bg-info text-center text-light p-1">
+                                    {{ gallery.title }}
+                                </h5>
+                                <p class="card-text bg-light text-left" style="padding: 10px 10px; min-height: 100px;">
+                                    {{ gallery.description }}
+                                </p>
+                            </div>
+                            <div class="card-footer bg-info text-center p-1">
+                                <a href="{% url 'reposit_n1:gallery_detail' gallery.id %}" class="btn btn-primary">
+                                    Ver Galeria
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% empty %}
+                <p>Você não tem acesso a nenhuma galeria no momento.</p>
+            {% endfor %}
+        </div>
+        
+        
+        
+        
+        
+        
+    </div>
+
 
 <!-- Campo de pesquisa de galerias -->
-<form method="GET" action="{% url 'dashboard' %}" class="mb-4">
-    <div class="form-row">
-        <div class="col-md-5">
-            <input type="text" name="search" class="form-control" 
-                   placeholder="Buscar por nome da galeria..." value="{{ request.GET.search }}">
-        </div>
-        <div class="col-md-3">
-            <input type="date" name="date" class="form-control" value="{{ request.GET.date }}">
-        </div>
-        <div class="col-md-2">
-            <button type="submit" class="btn btn-primary">Pesquisar</button>
-        </div>
-    </div>
-</form>
-
-
-<br>
-
-
-<h1>Bem-vindo(a), {{ user.nickname }}! <br>Aqui está sua Dashboard!</h1>
-<p>Aqui você poderá acessar suas informações de perfil e outros recursos.</p>
-<br>
-
-<!-- Exibir galerias que o usuário pode acessar -->
-<h2>Galerias disponíveis:</h2>
-<div class="row">
-    {% for gallery in user_galleries %}
-        {% if gallery.level <= user.user_level %}  <!-- Verifica se o nível da galeria é menor ou igual ao nível do usuário -->
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ gallery.title }}</h5>
-                        <p class="card-text">{{ gallery.description }}</p>
-                        <a href="{% url 'reposit_n1:gallery_detail' gallery.id %}" class="btn btn-primary">Ver Galeria</a>
-                    </div>
-                </div>
+<div class="container bg-warning mt-0 text-center my-auto mx-auto p-1">
+    <h6>Não encontrou o que deseja ou quer ir mais direto?</h6>
+    <form method="GET" action="{% url 'dashboard' %}" class="mb-4">
+        <div class="form-row">
+            <div class="col-md-3">
+                <input type="text" name="search" class="form-control" 
+                    placeholder="Buscar por nome da galeria..." value="{{ request.GET.search }}">
             </div>
-        {% endif %}
-    {% empty %}
-        <p>Você não tem acesso a nenhuma galeria no momento.</p>
-    {% endfor %}
+            <div class="col-md-3">
+                <input type="date" name="date" class="form-control" value="{{ request.GET.date }}">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary">Pesquisar</button>
+            </div>
+        </div>
+    </form>
 </div>
+<!-- fim Campo de pesquisa de galerias -->
 
 {% endblock %}
