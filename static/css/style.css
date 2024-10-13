@@ -5,8 +5,6 @@
 body { 
     background-color: white !important;
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
 }
 
 /* Área do logo */
@@ -17,38 +15,33 @@ body {
     display: flex; 
     align-items: center; 
     justify-content: center;  
-    margin-top: 30px;
-    margin-bottom: 0px; 
 }
 
 /* Menu principal feito com Bootstrap */
-.menuprincipal{
-    background-color: #343a40;
-    padding: 10px 0;
-    display: flex;              /* Usar flexbox para dispor os itens em linha */
-    justify-content: space-around; /* Distribui os itens com espaço igual ao redor */
-    flex-wrap: wrap;           /* Permite que os itens quebrem a linha se não houver espaço suficiente */
-    padding: 10px;             /* Adicione algum padding, se necessário */
-    margin-top: 0px;
-    width: 600px;
+.menuprincipal {
+    /* background-color: #343a40; */
+    /* padding: 10px 0; */
+    display: flex;              
+    justify-content: space-around; 
+    /* flex-wrap: wrap;            */
     align-items: center;
 }
-.menuprincipal .navbar {
+/* .menuprincipal .navbar {
     background-color: #000000;
-}
-.menuprincipal .nav-link {
+} */
+/* .menuprincipal .nav-link {
     color: #ffffff; 
     font-weight: bold;
-}
+} */
 .menuprincipal .nav-link:hover {
     background-color: #ffffff;
     color: #000000; 
 }
-.menuprincipal .nav-link.active,
+/* .menuprincipal .nav-link.active,
 .menuprincipal .nav-link:focus {
     background-color: #007bff; 
     color: #000000; 
-}
+} */
 
 /* Área do conteúdo principal */
 .main-content {
@@ -56,7 +49,6 @@ body {
     align-items: flex-start;
     justify-content: center;
     width: 100%;
-    max-width: 100%;
     padding: 1%;
     box-sizing: border-box;
 }
@@ -66,7 +58,7 @@ body {
 }
 
 /* Seção no conteúdo principal */
-.section {
+/* .section {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -87,52 +79,52 @@ body {
 .section p {
     text-align: justify;
     line-height: 1.6;
-}
+} */
 
 /* Rodapé/footer */
 .footer {
-    display: flex;
-    justify-content: space-around;
+    background-color: #343a40; /* Adiciona cor ao rodapé */
     color: #fff;
     padding: 3rem;
     width: 100%;
+    text-align: center; /* Centraliza o texto no rodapé */
 }
 
 /* Estilos específicos para o dashboard */
 .dashboard-content {
-    flex-grow: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
     padding: 1%;
     box-sizing: border-box;
 }
 
 /* Estilos do novo menu para o dashmenu.html */
 .dashmenu {
-    background-color: #343a40;
-    padding: 10px 0;
-    display: flex;              /* Usar flexbox para dispor os itens em linha */
-    justify-content: space-around; /* Distribui os itens com espaço igual ao redor */
-    flex-wrap: wrap;           /* Permite que os itens quebrem a linha se não houver espaço suficiente */
-    padding: 10px;             /* Adicione algum padding, se necessário */
-    margin-top: 0px;
-    width: 600px;
+    /* background-color: #343a40; */
+    /* padding: 10px 0; */
+    display: flex;              
+    justify-content: space-around; 
+    /* flex-wrap: wrap;            */
     align-items: center;
 }
-.dashmenu .navbar {
+/* .dashmenu .navbar {
     background-color: #000000;
 }
 .dashmenu .nav-link {
     color: #ffffff; 
     font-weight: bold;
-}
+} */
 .dashmenu .nav-link:hover {
     background-color: #ffffff;
     color: #000000; 
 }
-.dashmenu .nav-link.active,
+/* .dashmenu .nav-link.active,
 .dashmenu .nav-link:focus {
     background-color: #007bff; 
     color: #000000; 
-}
+} */
 
 
 /* estilo para galerias */
@@ -157,4 +149,33 @@ body {
 .modal-header,
 .modal-footer {
     border: none; /* Remover bordas do cabeçalho e rodapé */
+}
+
+/* Estilo personalizado para campos de entrada (forms) */
+.form-control {
+    border: 2px solid #007bff;  /* Borda azul */
+    border-radius: 8px;          /* Cantos arredondados */
+    padding: 10px;               /* Espaçamento interno */
+    background-color: #f9f9f9;   /* Fundo levemente acinzentado */
+    transition: all 0.3s ease;   /* Suave animação ao interagir */
+}
+
+/* Foco nos campos */
+.form-control:focus {
+    border-color: #ffc107;  /* Borda dourada ao focar */
+    box-shadow: 0 0 8px rgba(255, 193, 7, 0.5);  /* Glow amarelo */
+}
+
+/* Estilo para os campos inválidos */
+.form-control.is-invalid {
+    border-color: #dc3545;  /* Borda vermelha para erro */
+    background-color: #fff5f5;  /* Fundo claro para erro */
+}
+
+/* Labels personalizados */
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #343a40;
 }

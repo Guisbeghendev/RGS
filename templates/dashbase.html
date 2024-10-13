@@ -18,37 +18,37 @@
 
 <body>
 
+    <!-- cabeçalho -->
+    <div class="header">    
+        <div class="logogs">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" />
+        </div>
+    </div>
+
+    <!-- nav -->
+    <div class="container-fluid bg-dark">
+        <div class="navbar">
+            {% include 'includes/dashmenu.html' %}
+        </div>
+    </div>
+
+    <!-- main (conteudo)-->
     <div class="container-fluid">
-
-        <!-- cabeçalho -->
-        <div class="header">    
-            <div class="logogs">
-                <img src="{% static 'images/logo.png' %}" alt="Logo" />
-            </div>
-        </div>
-
-        <!-- nav -->
-        <div class="container-fluid bg-dark">
-            <div class="navbar">
-                {% include 'includes/dashmenu.html' %} <!-- Incluindo o novo menu tradicional -->
-            </div>
-        </div>
-
-        <!-- main (conteudo) -->
-        <div class="dashboard-content" id="mainContent">
+        <div class="dashboard-content" id="dashboardContent">
             <main class="conteudo">
                 {% block content %}
                 {% endblock %}
             </main>
         </div>
+    </div>
 
-        <!-- Rodapé -->
-        <div class="container-fluid bg-dark">
-            <div class="footer text-center">
-                <p>&copy; 2024 www.guisbeghen.com.br</p>
-            </div>
+    <!-- rodape/footer -->
+    <div class="container-fluid bg-dark">
+        <div class="footer">
+            <p>&copy; 2024 www.guisbeghen.com.br</p>
         </div>
     </div>
+    <br><br>
 
     <!-- Scripts Bootstrap 4 -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>

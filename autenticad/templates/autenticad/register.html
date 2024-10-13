@@ -1,112 +1,174 @@
 {% extends 'base.html' %}
 
+{% load form_extras %}
+
 {% block content %}
-<div class="container">
-    <h2>Registro de Usuário</h2>
-    
+<div class="container-fluid">
+
+    <!-- titulo pagina -->
+    <div class="conteiner-fluid bg-primary text-center font-weight-bolder text-warning">
+    <br><h4><dt>Cadastro de Usuário</dt></h4><br>
+    </div>
+
+    <br>
+
     <!-- Mensagens de sucesso ou erro -->
     {% if messages %}
-        <div class="alert alert-info">
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-        </div>
+    <div class="alert alert-info">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
     {% endif %}
-    
-    <!-- Formulário de registro -->
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+
+        <!--inicio card 1-->
+        <div class="card">
+            <!--titulo card 1-->
+            <div class="card-header bg-info text-center text-light">
+                <h5><dd>Campos Obrigatórios</dd></h5>
+            </div>
+
+            <!--corpo card 1-->
+            <div class="card-body bg-light text-left">
+                <!-- Formulário de registro -->
+                <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}  
+                {{ form.non_field_errors }}
+                
+                <!-- Seção de campos obrigatórios -->
+                
+                <div class="form-group">
+                    <dt><label for="{{ form.nickname.id_for_label }}">Nome de Usuário:</label></dt>
+                    {{ form.nickname|add_class:"form-control" }}
+                    {{ form.nickname.errors }}
+                </div><br>
+
+                <div class="form-group">
+                    <dt><label for="{{ form.email.id_for_label }}">E-mail:</label></dt>
+                    {{ form.email|add_class:"form-control" }}
+                    {{ form.email.errors }}
+                </div><br>
+
+                <div class="form-group">
+                    <dt><label for="{{ form.password1.id_for_label }}">Senha:</label></dt>
+                    {{ form.password1|add_class:"form-control" }}
+                    {{ form.password1.errors }}
+                </div><br>
+
+                <div class="form-group">
+                    <dt><label for="{{ form.password2.id_for_label }}">Confirme a Senha:</label></dt>
+                    {{ form.password2|add_class:"form-control" }}
+                    {{ form.password2.errors }}
+                </div><br>
+
+                <!-- fim Seção de campos obrigatórios -->
+
+            </div><!--fim corpo card 1-->
+
+            <!-- card 1 botão enviar-->
+            <div class="card-footer bg-info text-center">
+                <!-- Botão de registro após os campos obrigatórios -->
+                <button type="submit" class="btn btn-warning">Salvar</button>
+            </div>
+
+        </div>
+        <!--fim card 1-->
+
+        <br><br>
+
+        <!--inicio card 2-->
+        <div class="card">
+            <!--titulo card 2-->
+            <div class="card-header bg-info text-center text-light">
+                <h5><dd>Campos Opcionais</dd></h5>
+            </div>
+
+            <!--corpo card 2-->
+            <div class="card-body bg-light text-left">
+
+            <!-- Seção de campos opcionais -->
+
+            <div class="form-group">
+                <dt><label for="{{ form.name.id_for_label }}">Primeiro Nome:</label></dt>
+                {{ form.name|add_class:"form-control" }}
+                {{ form.name.errors }}
+            </div><br>
+
+            <div class="form-group">
+                <dt><label for="{{ form.surname.id_for_label }}">Sobrenome:</label></dt>
+                {{ form.surname|add_class:"form-control" }}
+                {{ form.surname.errors }}
+            </div><br>
+
+            <div class="form-group">
+                <dt><label for="{{ form.age.id_for_label }}">Idade:</label></dt>
+                {{ form.age|add_class:"form-control" }}
+                {{ form.age.errors }}
+            </div><br>
+
+            <div class="form-group">
+                <dt><label for="{{ form.birth_date.id_for_label }}">Data de Nascimento:</label></dt>
+                {{ form.birth_date|add_class:"form-control" }}
+                {{ form.birth_date.errors }}
+            </div><br>
+
+            <div class="form-group">
+                <dt><label for="{{ form.city.id_for_label }}">Cidade:</label></dt>
+                {{ form.city|add_class:"form-control" }}
+                {{ form.city.errors }}
+            </div><br>
+
+            <div class="form-group">
+                <dt><label for="{{ form.state.id_for_label }}">Estado:</label></dt>
+                {{ form.state|add_class:"form-control" }}
+                {{ form.state.errors }}
+            </div><br>
+
+            <div class="form-group">
+                <dt><label for="{{ form.address.id_for_label }}">Endereço:</label></dt>
+                {{ form.address|add_class:"form-control" }}
+                {{ form.address.errors }}
+            </div><br>
+
+            <div class="form-group">
+                <dt><label for="{{ form.whatsapp.id_for_label }}">WhatsApp:</label></dt>
+                {{ form.whatsapp|add_class:"form-control" }}
+                {{ form.whatsapp.errors }}
+            </div><br>
+
+            <div class="form-group">
+                <dt><label for="{{ form.avatar.id_for_label }}">Foto para Avatar:</label></dt>
+                {{ form.avatar|add_class:"form-control" }}
+                {{ form.avatar.errors }}
+            </div><br>
+
+            <div class="form-group">
+                <dt><label for="{{ form.biography.id_for_label }}">Biografia:</label></dt>
+                {{ form.biography|add_class:"form-control" }}
+                {{ form.biography.errors }}
+            </div><br>
+
+            <div class="form-group">
+                <dt><label for="{{ form.how_you_know.id_for_label }}">Como você me conhece?</label></dt>
+                {{ form.how_you_know|add_class:"form-control" }}
+                {{ form.how_you_know.errors }}
+            </div>
+
+            <br><br>
+
+            <!-- fim Seção de campos opcionais -->
+
+            <!-- card 2 botão enviar-->
+            <div class="card-footer bg-info text-center">
+                <!-- Botão de registro após os campos obrigatórios -->
+                <button type="submit" class="btn btn-warning">Salvar</button>
+            </div>
         
-        {{ form.non_field_errors }}
-
-        <!-- Seção de campos obrigatórios -->
-        <h4>Campos Obrigatórios</h4>
-        <div class="form-group">
-            <label for="{{ form.nickname.id_for_label }}">Nome de Usuário:</label>
-            {{ form.nickname }}
-            {{ form.nickname.errors }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.email.id_for_label }}">E-mail:</label>
-            {{ form.email }}
-            {{ form.email.errors }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.password1.id_for_label }}">Senha:</label>
-            {{ form.password1 }}
-            {{ form.password1.errors }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.password2.id_for_label }}">Confirme a Senha:</label>
-            {{ form.password2 }}
-            {{ form.password2.errors }}
         </div>
 
-        <!-- Botão de registro após os campos obrigatórios -->
-        <button type="submit" class="btn btn-primary">Registrar</button>
+        <!--fim card 2-->
 
-        <br><br><br>
 
-        <!-- Seção de campos opcionais -->
-        <h4>Campos Opcionais</h4>
-        <div class="form-group">
-            <label for="{{ form.name.id_for_label }}">Primeiro Nome:</label>
-            {{ form.name }}
-            {{ form.name.errors }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.surname.id_for_label }}">Sobrenome:</label>
-            {{ form.surname }}
-            {{ form.surname.errors }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.age.id_for_label }}">Idade:</label>
-            {{ form.age }}
-            {{ form.age.errors }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.birth_date.id_for_label }}">Data de Nascimento:</label>
-            {{ form.birth_date }}
-            {{ form.birth_date.errors }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.city.id_for_label }}">Cidade:</label>
-            {{ form.city }}
-            {{ form.city.errors }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.state.id_for_label }}">Estado:</label>
-            {{ form.state }}
-            {{ form.state.errors }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.address.id_for_label }}">Endereço:</label>
-            {{ form.address }}
-            {{ form.address.errors }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.whatsapp.id_for_label }}">WhatsApp:</label>
-            {{ form.whatsapp }}
-            {{ form.whatsapp.errors }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.avatar.id_for_label }}">Foto para Avatar:</label>
-            {{ form.avatar }}
-            {{ form.avatar.errors }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.biography.id_for_label }}">Biografia:</label>
-            {{ form.biography }}
-            {{ form.biography.errors }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.how_you_know.id_for_label }}">Como você me conhece?</label>
-            {{ form.how_you_know }}
-            {{ form.how_you_know.errors }}
-        </div>
-
-        <!-- Botão de registro ao final do formulário -->
-        <button type="submit" class="btn btn-primary">Registrar</button>
-    </form>
+        </form>
 </div>
 {% endblock %}
