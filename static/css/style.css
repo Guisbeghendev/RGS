@@ -179,3 +179,36 @@ label {
     display: block;
     color: #343a40;
 }
+
+/*outros efeitos para card*/
+.card-3d {
+    perspective: 1000px;
+    transition: transform 0.3s;
+}
+.card-3d:hover {
+    transform: rotateY(10deg) rotateX(5deg);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.glow-effect {
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
+    transition: box-shadow 0.3s;
+}
+.glow-effect:hover {
+    box-shadow: 0 0 20px rgba(33, 150, 243, 0.8), 
+                0 0 30px rgba(33, 150, 243, 0.5);
+}
+
+/*puse card usa no card boostrap*/
+.pulse-card {
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}

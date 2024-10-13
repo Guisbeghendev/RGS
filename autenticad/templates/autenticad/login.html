@@ -1,31 +1,64 @@
 {% extends 'base.html' %}
 
+{% load form_extras %}
+
 {% block content %}
-<h2>Login</h2>
-{% if messages %}
+
+
+<!-- titulo pagina -->
+    <div class="conteiner-fluid bg-primary text-center font-weight-bolder text-warning">
+    <br><h4><dt>Login</dt></h4><br>
+    </div>
+
+    <br>
+
+    <!-- Mensagens de sucesso ou erro -->
+    {% if messages %}
     <div class="alert alert-info">
         {% for message in messages %}
             {{ message }}
         {% endfor %}
     </div>
-{% endif %}
-<form method="post">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="nickname">Nome de Usuário (Nickname):</label>
-        <input type="text" name="nickname" class="form-control" id="nickname" required>
-        {% if form.nickname.errors %}
-            <div class="alert alert-danger">{{ form.nickname.errors }}</div>
-        {% endif %}
+    {% endif %}
+
+    <!--inicio card 1-->
+    <div class="card shadow-lg card-3d glow-effect ">
+        <!--titulo card 1--
+        <div class="card-header bg-info text-center text-light">
+            <h5><dd>Campos Obrigatórios</dd></h5>
+        </div>-->
+
+        <!--corpo card 1-->
+        <div class="card-body bg-light text-left">
+        <form method="post">
+        {% csrf_token %}
+
+            <!-- nickname-->
+            <div class="form-group">
+                <label for="nickname">Nome de Usuário (Nickname):</label>
+                <input type="text" name="nickname" class="form-control" id="nickname" required>
+                {% if form.nickname.errors %}
+                    <div class="alert alert-danger">{{ form.nickname.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- senha-->
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" name="password" class="form-control" id="password" required>
+                {% if form.password.errors %}
+                    <div class="alert alert-danger">{{ form.password.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- card 1 botão enviar-->
+            <div class="card-footer bg-info text-center">
+                <button type="submit" class="btn btn-warning">Entrar</button>
+            </div>
+        </form>
+        <a href="{% url 'register' %}">Não tem uma conta? Registre-se aqui.</a>
+        {% endblock %}
+
+        </div>
+
     </div>
-    <div class="form-group">
-        <label for="password">Senha:</label>
-        <input type="password" name="password" class="form-control" id="password" required>
-        {% if form.password.errors %}
-            <div class="alert alert-danger">{{ form.password.errors }}</div>
-        {% endif %}
-    </div>
-    <button type="submit" class="btn btn-primary">Entrar</button>
-</form>
-<a href="{% url 'register' %}">Não tem uma conta? Registre-se aqui.</a>
-{% endblock %}
