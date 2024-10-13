@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #meus subapps
     'home',
+    'sobregs',
     'autenticad',
     'reposit',
 ]

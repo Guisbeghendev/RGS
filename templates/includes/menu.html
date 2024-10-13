@@ -2,15 +2,14 @@
 
 <div class="menuprincipal">
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-        <a class="navbar-brand" href="{% url 'home' %}">HOME</a> <!-- pode colocar logo ou ppag inicial -->
+        <a class="navbar-brand" href="{% url 'home' %}">HOME</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
-                <!-- inicio links menu -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link 1</a>
+                    <a href="{% url 'sobregs:sobregs-home' %}" class="nav-link">Sobre GS</a> <!-- Adicionei a classe nav-link aqui -->
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
@@ -27,7 +26,6 @@
                         <a class="nav-link" href="{% url 'register' %}">Cadastrar</a> <!-- Link para a página de registro -->
                     </li>
                 {% endif %}
-                <!-- fim links menu -->    
             </ul>
         </div>  
     </nav>
