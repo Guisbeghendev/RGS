@@ -45,7 +45,7 @@ body {
 
 /* Área do conteúdo principal */
 .main-content {
-    display: flex;
+    display: block;
     align-items: flex-start;
     justify-content: center;
     width: 100%;
@@ -92,7 +92,7 @@ body {
 
 /* Estilos específicos para o dashboard */
 .dashboard-content {
-    display: flex;
+    display: block;
     align-items: flex-start;
     justify-content: center;
     width: 100%;

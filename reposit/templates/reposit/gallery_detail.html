@@ -3,63 +3,81 @@
 {% extends 'dashbase.html' %}
 
 {% block content %}
-<h1>{{ gallery.title }}</h1>
-<p>Data do evento: {{ gallery.event_date }}</p>
-<p>{{ gallery.description }}</p>
-<p>Total de likes: {{ gallery.total_likes }}</p>
 
-<h2>Galeria</h2>
-<div class="row gallery-images">
-    {% for image in gallery.images.all %}
-        <div class="col-6 col-md-4 col-lg-3">
-            <div class="image-card">
-                <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid" data-toggle="modal" data-target="#imageModal-{{ image.id }}">
-                <button class="like-button btn btn-light" data-image-id="{{ image.id }}">Like</button>
-                <span id="likes-count-{{ image.id }}">{{ image.likes }}</span> likes
+<div class="jumbotron">
+
+  <!-- titulo pagina -->
+  <div class="conteiner-fluid bg-primary text-center font-weight-bolder text-warning">
+    <br><h4><dt>{{ gallery.title }}</dt></h4><br>
+  </div>
+  <div class="conteiner-fluid bg-info font-weight-bolder text-light">
+    <p>Data: {{ gallery.event_date }}</p>
+    <p>descrição: {{ gallery.description }}</p>
+    <p>Total de likes: {{ gallery.total_likes }}</p>
+  </div>
+
+    <div class="row gallery-images">
+        {% for image in gallery.images.all %}
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="image-card">
+                    <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid" data-toggle="modal" data-target="#imageModal-{{ image.id }}">
+                    <button class="like-button btn btn-light" data-image-id="{{ image.id }}">Like</button>
+                    <span id="likes-count-{{ image.id }}">{{ image.likes }}</span> likes
+                </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
+
 </div>
 
-<!-- Modal -->
-{% for image in gallery.images.all %}
-<div class="modal fade" id="imageModal-{{ image.id }}" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="imageModalLabel">{{ image.title }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+<div class="container text-center">
+    <a href="{% url 'reposit_n1:gallery_list' %}">Voltar para Anos</a>
+    <br><br>
+</div>
+
+<div class='container-fluid bg-info'>
+
+    <!-- Modal -->
+    {% for image in gallery.images.all %}
+    <div class="modal fade" id="imageModal-{{ image.id }}" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">{{ image.title }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-{% endfor %}
-
-<h2>Comentários</h2>
-<div class="comments-section">
-    {% for comment in gallery.comments.all %}
-        <div class="comment">
-            <p>{{ comment.user.username }}: {{ comment.content }}</p>
-        </div>
-    {% empty %}
-        <p>Nenhum comentário disponível.</p>
     {% endfor %}
-</div>
 
-<!-- Formulário de comentários -->
-<form method="POST">
-    {% csrf_token %}
-    <textarea name="comment" placeholder="Deixe seu comentário" class="form-control mb-2"></textarea>
-    <button type="submit" class="btn btn-primary">Comentar</button>
-</form>
+    <h2>Comentários</h2>
+        <div class="comments-section">
+            {% for comment in gallery.comments.all %}
+                <div class="comment">
+                    <p>{{ comment.user.username }}: {{ comment.content }}</p>
+                </div>
+            {% empty %}
+                <p>Nenhum comentário disponível.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Formulário de comentários -->
+        <form method="POST">
+            {% csrf_token %}
+            <textarea name="comment" placeholder="Deixe seu comentário" class="form-control mb-2"></textarea>
+            <button type="submit" class="btn btn-primary">Comentar</button>
+        </form>
+
+</div>
 
 {% endblock %}
 

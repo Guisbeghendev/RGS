@@ -3,38 +3,55 @@
 {% extends 'dashbase.html' %}
 
 {% block content %}
-<h1>Galerias do Ano {{ year }}</h1>
 
-<!-- Paginação das galerias do ano -->
-<ul>
-  {% for gallery in page_obj %}
-    <li>
-      <a href="{% url 'reposit_n1:gallery_detail' gallery_id=gallery.id %}">
-        {{ gallery.title }} - {{ gallery.event_date }}
-      </a>
-    </li>
-  {% empty %}
-    <li>Nenhuma galeria encontrada para este ano.</li>
-  {% endfor %}
-</ul>
+<!--conteudo da jumbotrom gallery_by_year-->
+<div class="jumbotron">
 
-<div class="pagination">
-  <span class="step-links">
-    {% if page_obj.has_previous %}
-      <a href="?page=1">&laquo; Primeira</a>
-      <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
-    {% endif %}
+  <!-- titulo pagina -->
+  <div class="conteiner-fluid bg-primary text-center font-weight-bolder text-warning">
+    <br><h4><dt>Galerias do Ano {{ year }} :</dt></h4><br>
+  </div>
+  <br>
 
-    <span class="current">
-      Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
-    </span>
+  <!-- lista das galerias do ano -->
+  <ul>
+    {% for gallery in page_obj %}
+      <li>
+        <a href="{% url 'reposit_n1:gallery_detail' gallery_id=gallery.id %}">
+          {{ gallery.title }} - {{ gallery.event_date }}
+        </a>
+      </li>
+    {% empty %}
+      <li>Nenhuma galeria encontrada para este ano.</li>
+    {% endfor %}
+  </ul>
 
-    {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
-      <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
-    {% endif %}
-  </span>
+  <br><br>
+  <a href="{% url 'reposit_n1:gallery_list' %}">Voltar para Anos</a>
+
 </div>
+<!--fim conteudo da jumbotrom gallery_by_year-->
 
-<a href="{% url 'reposit_n1:gallery_list' %}">Voltar para Anos</a>
+
+  <!-- paginação das galerias do ano -->
+  <div class="container">
+    <div class="pagination">
+      <span class="step-links">
+        {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; Primeira</a>
+          <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+    
+        <span class="current">
+          Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+        </span>
+    
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+  </div>
+
 {% endblock %}

@@ -10,7 +10,7 @@
 </div>
 <!--fim boas vindas ao visitante-->
 
-<!--conteudo da dashboard-->
+    <!--conteudo da jumbotrom dashboard-->
     <div class="jumbotron">
 
         <!-- Exibir galerias que o usuário pode acessar -->
@@ -44,18 +44,14 @@
             {% empty %}
                 <p>Você não tem acesso a nenhuma galeria no momento.</p>
             {% endfor %}
-        </div>
-        
-        
-        
-        
-        
+        </div> 
         
     </div>
+    <!--fim conteudo da jumbotrom dashboard-->
 
 
 <!-- Campo de pesquisa de galerias -->
-<div class="container bg-warning mt-0 text-center my-auto mx-auto p-1">
+<div class="container-fluid bg-warning mt-0 text-center my-auto mx-auto p-1">
     <h6>Não encontrou o que deseja ou quer ir mais direto?</h6>
     <form method="GET" action="{% url 'dashboard' %}" class="mb-4">
         <div class="form-row">
