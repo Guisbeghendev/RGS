@@ -40,11 +40,17 @@ class CustomUser(AbstractUser):
     ]
     
     level = models.PositiveSmallIntegerField(choices=HIERARCHY_LEVELS, default=1)  # Definindo o nível padrão como 1
-    
     user_level = models.PositiveSmallIntegerField(choices=HIERARCHY_LEVELS, default=1)  # Novo campo user_level
-    
     nickname = models.CharField(max_length=30, unique=True)  # Campo nickname obrigatório e único
     
+    # Novos campos a serem adicionados
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)  # Campo de avatar
+    age = models.PositiveIntegerField(blank=True, null=True)  # Campo de idade
+    birth_date = models.DateField(blank=True, null=True)  # Campo de data de nascimento
+    city = models.CharField(max_length=100, blank=True, null=True)  # Campo de cidade
+    biography = models.TextField(blank=True, null=True)  # Campo de biografia
+    how_you_know = models.TextField(blank=True, null=True)  # Campo de como conhece
+
     groups = models.ManyToManyField(
         Group,
         related_name='customuser_set',  # Nome relacionado para o acesso reverso

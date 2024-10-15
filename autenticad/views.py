@@ -71,3 +71,11 @@ def dashboard(request):
     return render(request, 'autenticad/dashboard.html', {
         'user_galleries': user_galleries
     })
+
+
+@login_required
+def user_profile(request):
+    user = request.user  
+    user = request.us
+# Isso pega o usuário autenticado
+    return render(request, 'autenticad/profile.html', {'user': user})

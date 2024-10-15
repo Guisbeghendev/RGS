@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'sobregs',
     'autenticad',
     'reposit',
+    'profilegs',
 ]
 
 MIDDLEWARE = [
