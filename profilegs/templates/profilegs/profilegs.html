@@ -1,18 +1,27 @@
 <!-- profilegs/templates/profilegs/profilegs.html -->
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Meu Perfil</title>
-</head>
-<body>
-    <h1>Meu Perfil</h1>
+
+
+    {% extends 'dashbase.html' %}
+
+{% load form_extras %}
+
+{% block content %}
+
+
+<!-- titulo pagina -->
+    <div class="text-center bg-dark text-light py-3 rounded">
+    <br><h4><dt>perfil</dt></h4><br>
+    </div>
+
+    <br>
+
     <div>
         {% if user.avatar %}
             <img src="{{ user.avatar.url }}" alt="Avatar" style="width: 150px; height: 150px;">
         {% else %}
             <p>Este usuário ainda não possui avatar.</p>
         {% endif %}
+        
         <p><strong>Nome de Usuário:</strong> {{ user.nickname|default:"Informação ainda não cadastrada" }}</p>
         <p><strong>E-mail:</strong> {{ user.email|default:"Informação ainda não cadastrada" }}</p>
         <p><strong>Idade:</strong> {{ user.age|default:"Informação ainda não cadastrada" }}</p>
@@ -24,5 +33,5 @@
         <p><strong>Biografia:</strong> {{ user.biography|default:"Informação ainda não cadastrada" }}</p>
         <p><strong>Como você me conhece:</strong> {{ user.how_you_know|default:"Informação ainda não cadastrada" }}</p>
     </div>
-</body>
-</html>
+    
+    {% endblock content %}
