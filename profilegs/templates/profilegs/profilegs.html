@@ -3,9 +3,26 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Perfil do Usuário</title>
+    <title>Meu Perfil</title>
 </head>
 <body>
-    <h1>Bem-vindo ao seu perfil, {{ user.username }}!</h1>
+    <h1>Meu Perfil</h1>
+    <div>
+        {% if user.avatar %}
+            <img src="{{ user.avatar.url }}" alt="Avatar" style="width: 150px; height: 150px;">
+        {% else %}
+            <p>Este usuário ainda não possui avatar.</p>
+        {% endif %}
+        <p><strong>Nome de Usuário:</strong> {{ user.nickname|default:"Informação ainda não cadastrada" }}</p>
+        <p><strong>E-mail:</strong> {{ user.email|default:"Informação ainda não cadastrada" }}</p>
+        <p><strong>Idade:</strong> {{ user.age|default:"Informação ainda não cadastrada" }}</p>
+        <p><strong>Data de Nascimento:</strong> {{ user.birth_date|default:"Informação ainda não cadastrada" }}</p>
+        <p><strong>Cidade:</strong> {{ user.city|default:"Informação ainda não cadastrada" }}</p>
+        <p><strong>Estado:</strong> {{ user.state|default:"Informação ainda não cadastrada" }}</p>
+        <p><strong>Endereço:</strong> {{ user.address|default:"Informação ainda não cadastrada" }}</p>
+        <p><strong>WhatsApp:</strong> {{ user.whatsapp|default:"Informação ainda não cadastrada" }}</p>
+        <p><strong>Biografia:</strong> {{ user.biography|default:"Informação ainda não cadastrada" }}</p>
+        <p><strong>Como você me conhece:</strong> {{ user.how_you_know|default:"Informação ainda não cadastrada" }}</p>
+    </div>
 </body>
 </html>
