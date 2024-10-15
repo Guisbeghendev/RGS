@@ -17,4 +17,7 @@ urlpatterns = [
 
     # Processar likes em uma imagem via AJAX
     path('like/<int:image_id>/', views.like_image, name='like_image'),
+
+    # Visualizar imagem com marca d'água virtual
+    path('image/<int:image_id>/', views.gallery_image_view, name='gallery_image_view'),
 ]

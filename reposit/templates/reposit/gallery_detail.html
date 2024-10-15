@@ -20,7 +20,8 @@
         {% for image in gallery.images.all %}
             <div class="col-6 col-md-4 col-lg-3 mb-4">
                 <div class="gallery-img-card card shadow-sm">
-                    <img src="{{ image.image.url }}" alt="{{ image.title }}" class="card-img-top" data-toggle="modal" data-target="#imageModal-{{ image.id }}">
+                    <!-- Exibindo imagem com a URL que será processada pela view de marca d'água -->
+                    <img src="{% url 'reposit_n1:gallery_image_view' image.id %}" alt="{{ image.title }}" class="card-img-top" data-toggle="modal" data-target="#imageModal-{{ image.id }}">
                     <div class="card-body text-center">
                         <button class="btn btn-sm btn-outline-danger like-button" data-image-id="{{ image.id }}">
                             Curtir
@@ -39,27 +40,26 @@
 
 </div>
 
-    <!-- Comentários -->
-    <div class="bg-secondary p-3 rounded text-white">
-        <h3>Comentários</h3>
-        <div class="comments-section mb-3">
-            {% for comment in gallery.comments.all %}
-                <div class="border-bottom py-2">
-                    <strong>{{ comment.user.username }}:</strong> {{ comment.content }}
-                </div>
-            {% empty %}
-                <p>Nenhum comentário disponível.</p>
-            {% endfor %}
-        </div>
-
-
-        <!-- Formulário de Comentários -->
-        <form method="POST" class="mt-2">
-            {% csrf_token %}
-            <textarea name="comment" placeholder="Deixe seu comentário" class="form-control mb-2" rows="3"></textarea>
-            <button type="submit" class="btn btn-primary btn-block">Comentar</button>
-        </form>
+<!-- Comentários -->
+<div class="bg-secondary p-3 rounded text-white">
+    <h3>Comentários</h3>
+    <div class="comments-section mb-3">
+        {% for comment in gallery.comments.all %}
+            <div class="border-bottom py-2">
+                <strong>{{ comment.user.username }}:</strong> {{ comment.content }}
+            </div>
+        {% empty %}
+            <p>Nenhum comentário disponível.</p>
+        {% endfor %}
     </div>
+
+    <!-- Formulário de Comentários -->
+    <form method="POST" class="mt-2">
+        {% csrf_token %}
+        <textarea name="comment" placeholder="Deixe seu comentário" class="form-control mb-2" rows="3"></textarea>
+        <button type="submit" class="btn btn-primary btn-block">Comentar</button>
+    </form>
+</div>
 
 <!-- Modais para Visualização das Imagens -->
 {% for image in gallery.images.all %}
@@ -73,7 +73,7 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-                <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid">
+                <img src="{% url 'reposit_n1:gallery_image_view' image.id %}" alt="{{ image.title }}" class="img-fluid">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
