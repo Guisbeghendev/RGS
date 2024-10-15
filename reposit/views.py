@@ -10,7 +10,13 @@ from io import BytesIO
 def gallery_list(request):
     user_level = request.user.level if request.user.is_authenticated else 1
     galleries = Gallery.objects.filter(level__lte=user_level)
-    years = galleries.dates('event_date', 'year', order='DESC')
+    
+    # Verifica se o parâmetro de ordem foi passado na URL
+    order = request.GET.get('order', 'desc')  # 'desc' é o padrão
+    if order == 'asc':
+        years = galleries.dates('event_date', 'year', order='ASC')  # Ordenação crescente
+    else:
+        years = galleries.dates('event_date', 'year', order='DESC')  # Ordenação decrescente
 
     # Paginação dos anos (10 anos por página)
     paginator = Paginator(years, 10)
@@ -19,7 +25,8 @@ def gallery_list(request):
 
     return render(request, 'reposit/gallery_list.html', {
         'page_obj': page_obj, 
-        'galleries': galleries
+        'galleries': galleries,
+        'current_order': order  # Passando o estado atual da ordem para o template
     })
 
 # Exibir todas as galerias de um ano específico com paginação

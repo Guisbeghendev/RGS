@@ -4,23 +4,30 @@
 
 {% block content %}
 
-<!-- Conteúdo da jumbotron gallery_list -->
 <div class="jumbotron">
 
-  <!-- Título da página -->
   <div class="container-fluid bg-dark text-center font-weight-bolder text-light">
     <br><h4><dt>Lista por ano:</dt></h4><br>
   </div>
   <br>
 
-  <!-- Lista dos anos em formato de cartões -->
+  <!-- Formulário de ordenação -->
+  <div class="text-center mb-3">
+    <form method="GET">
+      <select name="order" onchange="this.form.submit()">
+        <option value="desc" {% if current_order == 'desc' %}selected{% endif %}>Ordem Decrescente</option>
+        <option value="asc" {% if current_order == 'asc' %}selected{% endif %}>Ordem Crescente</option>
+      </select>
+    </form>
+  </div>
+
   <div class="row">
     {% for year in page_obj %}
       <div class="col-md-3 mb-4">
         <div class="card text-center">
           <div class="card-body">
             <h5 class="card-title">{{ year.year }}</h5>
-            <a href="{% url 'reposit_n1:gallery_by_year' year=year.year %}" class="btn btn-primary">Ver Galerias</a>
+            <a href="{% url 'reposit_n1:gallery_by_year' year=year.year %}?order={{ current_order }}" class="btn btn-primary">Ver Galerias</a>
           </div>
         </div>
       </div>
@@ -29,21 +36,19 @@
     {% endfor %}
   </div>
 
-  <!-- Botão para retornar à Dashboard -->
   <div class="text-center mt-4">
     <a href="{% url 'dashboard' %}" class="btn btn-secondary">Voltar para Dashboard</a>
   </div>
 
 </div>
-<!-- Fim conteúdo da jumbotron gallery_list -->
 
 <!-- Paginação dos anos -->
 <div class="container">
   <div class="pagination">
     <span class="step-links">
       {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; Primeira</a>
-        <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        <a href="?page=1&order={{ current_order }}">&laquo; Primeira</a>
+        <a href="?page={{ page_obj.previous_page_number }}&order={{ current_order }}">Anterior</a>
       {% endif %}
   
       <span class="current">
@@ -51,8 +56,8 @@
       </span>
   
       {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+        <a href="?page={{ page_obj.next_page_number }}&order={{ current_order }}">Próxima</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}&order={{ current_order }}">Última &raquo;</a>
       {% endif %}
     </span>
   </div>
