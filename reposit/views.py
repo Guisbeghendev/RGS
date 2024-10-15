@@ -12,7 +12,7 @@ def gallery_list(request):
     galleries = Gallery.objects.filter(level__lte=user_level)
     years = galleries.dates('event_date', 'year', order='DESC')
 
-    # Paginação dos anos
+    # Paginação dos anos (10 anos por página)
     paginator = Paginator(years, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -27,7 +27,7 @@ def gallery_by_year(request, year):
     user_level = request.user.level if request.user.is_authenticated else 1
     galleries = Gallery.objects.filter(event_date__year=year, level__lte=user_level)
 
-    # Paginação das galerias do ano
+    # Paginação das galerias do ano (10 galerias por página)
     paginator = Paginator(galleries, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -66,4 +66,3 @@ def like_image(request, image_id):
             return JsonResponse({'error': str(e)}, status=400)
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
-

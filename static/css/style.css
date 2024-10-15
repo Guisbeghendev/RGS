@@ -151,6 +151,16 @@ body {
     border: none; /* Remover bordas do cabeçalho e rodapé */
 }
 
+/*cards na galeria */
+.gallery-img-card img {
+    height: 200px; /* Altura padronizada */
+    width: 100%; /* Ocupa a largura do card */
+    object-fit: cover; /* Ajusta a imagem sem distorcer */
+    object-position: center; /* Centraliza a imagem no espaço disponível */
+}
+
+
+
 /* Estilo personalizado para campos de entrada (forms) */
 .form-control {
     border: 2px solid #007bff;  /* Borda azul */

@@ -4,31 +4,40 @@
 
 {% block content %}
 
-<!--conteudo da jumbotrom gallery_list-->
+<!-- Conteúdo da jumbotron gallery_list -->
 <div class="jumbotron">
 
-  <!-- titulo pagina -->
-  <div class="conteiner-fluid bg-primary text-center font-weight-bolder text-warning">
+  <!-- Título da página -->
+  <div class="container-fluid bg-dark text-center font-weight-bolder text-light">
     <br><h4><dt>Lista por ano:</dt></h4><br>
   </div>
   <br>
-  <!-- lista dos anos -->
-  <ul>
+
+  <!-- Lista dos anos em formato de cartões -->
+  <div class="row">
     {% for year in page_obj %}
-      <li>
-        <a href="{% url 'reposit_n1:gallery_by_year' year=year.year %}">
-          {{ year.year }}
-        </a>
-      </li>
+      <div class="col-md-3 mb-4">
+        <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">{{ year.year }}</h5>
+            <a href="{% url 'reposit_n1:gallery_by_year' year=year.year %}" class="btn btn-primary">Ver Galerias</a>
+          </div>
+        </div>
+      </div>
     {% empty %}
-      <li>Nenhuma galeria encontrada.</li>
+      <p class="text-center">Nenhuma galeria encontrada.</p>
     {% endfor %}
-  </ul>
+  </div>
+
+  <!-- Botão para retornar à Dashboard -->
+  <div class="text-center mt-4">
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Voltar para Dashboard</a>
+  </div>
 
 </div>
-<!--fim conteudo da jumbotrom gallery_list-->
+<!-- Fim conteúdo da jumbotron gallery_list -->
 
-<!-- paginação dos anos -->
+<!-- Paginação dos anos -->
 <div class="container">
   <div class="pagination">
     <span class="step-links">
@@ -48,11 +57,5 @@
     </span>
   </div>
 </div>
-
-
-
-
-
-
 
 {% endblock %}

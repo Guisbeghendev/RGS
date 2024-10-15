@@ -6,7 +6,7 @@
 
 
 <!-- titulo pagina -->
-    <div class="conteiner-fluid bg-primary text-center font-weight-bolder text-warning">
+    <div class="text-center bg-dark text-light py-3 rounded">
     <br><h4><dt>Login</dt></h4><br>
     </div>
 
@@ -22,11 +22,7 @@
     {% endif %}
 
     <!--inicio card 1-->
-    <div class="card shadow-lg card-3d glow-effect ">
-        <!--titulo card 1--
-        <div class="card-header bg-info text-center text-light">
-            <h5><dd>Campos Obrigatórios</dd></h5>
-        </div>-->
+    <div class="card shadow-lg ">
 
         <!--corpo card 1-->
         <div class="card-body bg-light text-left">
@@ -52,10 +48,11 @@
             </div>
 
             <!-- card 1 botão enviar-->
-            <div class="card-footer bg-info text-center">
+            <div class="card-footer bg-secondary text-center">
                 <button type="submit" class="btn btn-warning">Entrar</button>
             </div>
         </form>
+        <br>
         <a href="{% url 'register' %}">Não tem uma conta? Registre-se aqui.</a>
         {% endblock %}
 

@@ -3,52 +3,51 @@
 
 {% block content %}
 
-<!--boas vindas ao visitante-->
-<div class="container text-center">
-<h6><dt>Bem-vindo(a), {{ user.nickname }}! <br>Aqui está sua Dashboard!</dt></h6>
-<p>Aqui você poderá acessar suas informações de perfil e outros recursos.</p>
+<!-- boas vindas ao visitante -->
+<div class="text-center py-3 rounded">
+    <h6><dt>Bem-vindo(a), {{ user.nickname }}! <br>Aqui está sua Dashboard!</dt></h6>
+    <p>Aqui você poderá acessar suas informações de perfil e outros recursos.</p>
 </div>
-<!--fim boas vindas ao visitante-->
+<!-- fim boas vindas ao visitante -->
 
-    <!--conteudo da jumbotrom dashboard-->
-    <div class="jumbotron">
+<!-- conteudo da jumbotron dashboard -->
+<div class="jumbotron">
 
-        <!-- Exibir galerias que o usuário pode acessar -->
-        <!-- titulo pagina -->
-        <div class="conteiner-fluid bg-primary text-center font-weight-bolder text-warning">
-            <br><h4><dt>Minhas galerias disponíveis:</dt></h4><br>
-        </div>
-        <br>
-        <!--galerias disponiveis-->
-        <div class="row gx-3 gy-4 justify-content-center"> <!-- Espaço reduzido entre colunas -->
-            {% for gallery in user_galleries %}
-                {% if gallery.level <= user.user_level %}
-                    <div class="col-lg-6 col-md-8 col-sm-12 mb-2">  <!-- Mais largura nas telas maiores -->
-                        <div class="card h-100 shadow-lg card-3d pulse-card">
-                            <div class="card-body p-1">  <!-- Mais espaço interno em telas grandes -->
-                                <h5 class="card-title bg-info text-center text-light p-1">
-                                    {{ gallery.title }}
-                                </h5>
-                                <p class="card-text bg-light text-left" style="padding: 10px 10px; min-height: 100px;">
-                                    {{ gallery.description }}
-                                </p>
-                            </div>
-                            <div class="card-footer bg-info text-center p-1">
-                                <a href="{% url 'reposit_n1:gallery_detail' gallery.id %}" class="btn btn-primary">
-                                    Ver Galeria
-                                </a>
-                            </div>
+    <!-- Exibir galerias que o usuário pode acessar -->
+    <!-- titulo pagina -->
+    <div class="container-fluid bg-dark text-center font-weight-bolder text-light">
+        <br><h4><dt>Minhas galerias disponíveis:</dt></h4><br>
+    </div>
+    <br>
+    <!-- galerias disponiveis -->
+    <div class="row gx-3 gy-4 justify-content-center"> <!-- Espaço reduzido entre colunas -->
+        {% for gallery in user_galleries %}
+            {% if gallery.level <= user.user_level %}
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-4"> <!-- Ajustando tamanhos para melhor alinhamento -->
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title bg-info text-center text-light p-1">
+                                {{ gallery.title }}
+                            </h5>
+                            <p class="card-text bg-light text-left" style="padding: 10px 10px; min-height: 100px;">
+                                {{ gallery.description }}
+                            </p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'reposit_n1:gallery_detail' gallery.id %}" class="btn btn-primary">
+                                Ver Galeria
+                            </a>
                         </div>
                     </div>
-                {% endif %}
-            {% empty %}
-                <p>Você não tem acesso a nenhuma galeria no momento.</p>
-            {% endfor %}
-        </div> 
+                </div>
+            {% endif %}
+        {% empty %}
+            <p>Você não tem acesso a nenhuma galeria no momento.</p>
+        {% endfor %}
+    </div> 
         
-    </div>
-    <!--fim conteudo da jumbotrom dashboard-->
-
+</div>
+<!-- fim conteudo da jumbotron dashboard -->
 
 <!-- Campo de pesquisa de galerias -->
 <div class="container-fluid bg-warning mt-0 text-center my-auto mx-auto p-1">

@@ -1,57 +1,67 @@
 <!-- reposit/templates/reposit/gallery_by_year.html -->
 
 {% extends 'dashbase.html' %}
+{% load static %} <!-- Carregar o módulo de static aqui -->
 
 {% block content %}
 
-<!--conteudo da jumbotrom gallery_by_year-->
 <div class="jumbotron">
 
-  <!-- titulo pagina -->
-  <div class="conteiner-fluid bg-primary text-center font-weight-bolder text-warning">
-    <br><h4><dt>Galerias do Ano {{ year }} :</dt></h4><br>
+  <!-- Título e botão de retorno -->
+  <div class="container-fluid bg-dark text-center font-weight-bolder text-light">
+    <br><h4><dt>Galerias do Ano {{ year }}</dt></h4><br>
+    
+    <div class="text-center">
+      <a href="{% url 'reposit_n1:gallery_list' %}" class="btn btn-outline-light">
+        ← Voltar para Anos
+      </a>
+    </div>
+    <br>
   </div>
-  <br>
 
-  <!-- lista das galerias do ano -->
-  <ul>
+  <!-- Cards das galerias do ano -->
+  <div class="row">
     {% for gallery in page_obj %}
-      <li>
-        <a href="{% url 'reposit_n1:gallery_detail' gallery_id=gallery.id %}">
-          {{ gallery.title }} - {{ gallery.event_date }}
-        </a>
-      </li>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          {% if gallery.images.first %}
+            <img src="{{ gallery.images.first.image.url }}" class="card-img-top" alt="{{ gallery.title }}">
+          {% else %}
+            <img src="{% static 'default-image.jpg' %}" class="card-img-top" alt="Imagem padrão">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ gallery.title }}</h5>
+            <p class="card-text">{{ gallery.description|truncatewords:15 }}</p>
+            <a href="{% url 'reposit_n1:gallery_detail' gallery.id %}" class="btn btn-primary">Ver mais</a>
+          </div>
+        </div>
+      </div>
     {% empty %}
-      <li>Nenhuma galeria encontrada para este ano.</li>
+      <p class="text-center">Nenhuma galeria encontrada para este ano.</p>
     {% endfor %}
-  </ul>
+  </div>
 
-  <br><br>
-  <a href="{% url 'reposit_n1:gallery_list' %}">Voltar para Anos</a>
+  <!-- Paginação -->
+  <div class="pagination mt-4">
+    <div class="d-flex justify-content-between">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">← Anterior</a>
+      {% else %}
+        <span></span>  <!-- Espaço reservado para manter alinhamento -->
+      {% endif %}
 
-</div>
-<!--fim conteudo da jumbotrom gallery_by_year-->
+      <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
 
-
-  <!-- paginação das galerias do ano -->
-  <div class="container">
-    <div class="pagination">
-      <span class="step-links">
-        {% if page_obj.has_previous %}
-          <a href="?page=1">&laquo; Primeira</a>
-          <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
-        {% endif %}
-    
-        <span class="current">
-          Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
-        </span>
-    
-        {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
-          <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
-        {% endif %}
-      </span>
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">Próxima →</a>
+      {% else %}
+        <span></span>  <!-- Espaço reservado para manter alinhamento -->
+      {% endif %}
     </div>
   </div>
 
+</div>
+
 {% endblock %}
+
+

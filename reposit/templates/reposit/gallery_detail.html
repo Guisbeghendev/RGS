@@ -1,89 +1,112 @@
-<!-- reposit/templates/reposit/gallery_detail.html -->
-
 {% extends 'dashbase.html' %}
 
 {% block content %}
-
 <div class="jumbotron">
 
-  <!-- titulo pagina -->
-  <div class="conteiner-fluid bg-primary text-center font-weight-bolder text-warning">
-    <br><h4><dt>{{ gallery.title }}</dt></h4><br>
-  </div>
-  <div class="conteiner-fluid bg-info font-weight-bolder text-light">
-    <p>Data: {{ gallery.event_date }}</p>
-    <p>descrição: {{ gallery.description }}</p>
-    <p>Total de likes: {{ gallery.total_likes }}</p>
-  </div>
+    <!-- Título da Galeria -->
+    <div class="text-center bg-dark text-light py-3 rounded">
+        <h2 class="font-weight-bold">{{ gallery.title }}</h2>
+    </div>
 
-    <div class="row gallery-images">
+    <!-- Informações da Galeria -->
+    <div class="bg-light p-3 my-3 rounded shadow-sm">
+        <p><strong>Data:</strong> {{ gallery.event_date }}</p>
+        <p><strong>Descrição:</strong> {{ gallery.description }}</p>
+        <p><strong>Total de Likes:</strong> {{ gallery.total_likes }}</p>
+    </div>
+
+    <!-- Imagens da Galeria -->
+    <div class="row gallery" id="gallery">
         {% for image in gallery.images.all %}
-            <div class="col-6 col-md-4 col-lg-3">
-                <div class="image-card">
-                    <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid" data-toggle="modal" data-target="#imageModal-{{ image.id }}">
-                    <button class="like-button btn btn-light" data-image-id="{{ image.id }}">Like</button>
-                    <span id="likes-count-{{ image.id }}">{{ image.likes }}</span> likes
+            <div class="col-6 col-md-4 col-lg-3 mb-4">
+                <div class="gallery-img-card card shadow-sm">
+                    <img src="{{ image.image.url }}" alt="{{ image.title }}" class="card-img-top" data-toggle="modal" data-target="#imageModal-{{ image.id }}">
+                    <div class="card-body text-center">
+                        <button class="btn btn-sm btn-outline-danger like-button" data-image-id="{{ image.id }}">
+                            Curtir
+                        </button>
+                        <span id="likes-count-{{ image.id }}" class="ml-2">{{ image.likes }}</span> likes
+                    </div>
                 </div>
             </div>
         {% endfor %}
     </div>
 
-</div>
-
-<div class="container text-center">
-    <a href="{% url 'reposit_n1:gallery_list' %}">Voltar para Anos</a>
-    <br><br>
-</div>
-
-<div class='container-fluid bg-info'>
-
-    <!-- Modal -->
-    {% for image in gallery.images.all %}
-    <div class="modal fade" id="imageModal-{{ image.id }}" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="imageModalLabel">{{ image.title }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-        </div>
+    <!-- Link para retornar à lista de anos -->
+    <div class="text-center my-4">
+        <a href="{% url 'reposit_n1:gallery_list' %}" class="btn btn-secondary">Voltar para Anos</a>
     </div>
-    {% endfor %}
 
-    <h2>Comentários</h2>
-        <div class="comments-section">
+</div>
+
+    <!-- Comentários -->
+    <div class="bg-secondary p-3 rounded text-white">
+        <h3>Comentários</h3>
+        <div class="comments-section mb-3">
             {% for comment in gallery.comments.all %}
-                <div class="comment">
-                    <p>{{ comment.user.username }}: {{ comment.content }}</p>
+                <div class="border-bottom py-2">
+                    <strong>{{ comment.user.username }}:</strong> {{ comment.content }}
                 </div>
             {% empty %}
                 <p>Nenhum comentário disponível.</p>
             {% endfor %}
         </div>
 
-        <!-- Formulário de comentários -->
-        <form method="POST">
+
+        <!-- Formulário de Comentários -->
+        <form method="POST" class="mt-2">
             {% csrf_token %}
-            <textarea name="comment" placeholder="Deixe seu comentário" class="form-control mb-2"></textarea>
-            <button type="submit" class="btn btn-primary">Comentar</button>
+            <textarea name="comment" placeholder="Deixe seu comentário" class="form-control mb-2" rows="3"></textarea>
+            <button type="submit" class="btn btn-primary btn-block">Comentar</button>
         </form>
+    </div>
 
+<!-- Modais para Visualização das Imagens -->
+{% for image in gallery.images.all %}
+<div class="modal fade" id="imageModal-{{ image.id }}" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel-{{ image.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel-{{ image.id }}">{{ image.title }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
 </div>
-
+{% endfor %}
 {% endblock %}
 
 {% block extra_js %}
-    <script>
-        const csrftoken = '{{ csrf_token }}';
-        // Adicione seu código JavaScript aqui
-    </script>
+<script>
+    document.querySelectorAll('.like-button').forEach(button => {
+        button.addEventListener('click', function () {
+            const imageId = this.dataset.imageId;
+            fetch(`/reposit/like-image/${imageId}/`, {
+                method: 'POST',
+                headers: { 'X-CSRFToken': '{{ csrf_token }}' }
+            }).then(response => response.json()).then(data => {
+                if (data.likes !== undefined) {
+                    document.getElementById(`likes-count-${imageId}`).textContent = data.likes;
+                }
+            }).catch(error => console.error('Erro ao curtir imagem:', error));
+        });
+    });
+
+    // Inicializando o Justified Gallery
+    $(document).ready(function() {
+        $('.gallery').justifiedGallery({
+            rowHeight: 200,
+            lastRow: 'justify',
+            margins: 5
+        });
+    });
+</script>
 {% endblock %}
