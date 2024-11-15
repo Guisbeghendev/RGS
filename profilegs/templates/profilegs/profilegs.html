@@ -1,37 +1,45 @@
 <!-- profilegs/templates/profilegs/profilegs.html -->
 
-
-    {% extends 'dashbase.html' %}
+{% extends 'dashbase.html' %}
 
 {% load form_extras %}
 
 {% block content %}
 
+<!-- Título da página -->
+<div class="text-center bg-dark text-light py-3 rounded">
+    <br><h4><dt>Perfil</dt></h4><br>
+</div>
 
-<!-- titulo pagina -->
-    <div class="text-center bg-dark text-light py-3 rounded">
-    <br><h4><dt>perfil</dt></h4><br>
-    </div>
+<br>
 
-    <br>
+<div>
+    {% if user.avatar %}
+        <img src="{{ user.avatar.url }}" alt="Avatar" style="width: 150px; height: 150px;">
+    {% else %}
+        <p>Este usuário ainda não possui avatar.</p>
+    {% endif %}
 
-    <div>
-        {% if user.avatar %}
-            <img src="{{ user.avatar.url }}" alt="Avatar" style="width: 150px; height: 150px;">
-        {% else %}
-            <p>Este usuário ainda não possui avatar.</p>
-        {% endif %}
-        
-        <p><strong>Nome de Usuário:</strong> {{ user.nickname|default:"Informação ainda não cadastrada" }}</p>
-        <p><strong>E-mail:</strong> {{ user.email|default:"Informação ainda não cadastrada" }}</p>
-        <p><strong>Idade:</strong> {{ user.age|default:"Informação ainda não cadastrada" }}</p>
-        <p><strong>Data de Nascimento:</strong> {{ user.birth_date|default:"Informação ainda não cadastrada" }}</p>
-        <p><strong>Cidade:</strong> {{ user.city|default:"Informação ainda não cadastrada" }}</p>
-        <p><strong>Estado:</strong> {{ user.state|default:"Informação ainda não cadastrada" }}</p>
-        <p><strong>Endereço:</strong> {{ user.address|default:"Informação ainda não cadastrada" }}</p>
-        <p><strong>WhatsApp:</strong> {{ user.whatsapp|default:"Informação ainda não cadastrada" }}</p>
-        <p><strong>Biografia:</strong> {{ user.biography|default:"Informação ainda não cadastrada" }}</p>
-        <p><strong>Como você me conhece:</strong> {{ user.how_you_know|default:"Informação ainda não cadastrada" }}</p>
-    </div>
-    
-    {% endblock content %}
+    <p><strong>Nome Completo:</strong> {{ user.name|default:"Informação ainda não cadastrada" }}</p>
+    <p><strong>Nome de Usuário:</strong> {{ user.nickname|default:"Informação ainda não cadastrada" }}</p>
+    <p><strong>E-mail:</strong> {{ user.email|default:"Informação ainda não cadastrada" }}</p>
+    <p><strong>Idade:</strong> {{ user.age|default:"Informação ainda não cadastrada" }}</p>
+    <p><strong>Data de Nascimento:</strong> {{ user.birth_date|default:"Informação ainda não cadastrada" }}</p>
+    <p><strong>Cidade:</strong> {{ user.city|default:"Informação ainda não cadastrada" }}</p>
+    <p><strong>Estado:</strong> {{ user.state|default:"Informação ainda não cadastrada" }}</p>
+    <p><strong>Endereço:</strong> {{ user.address|default:"Informação ainda não cadastrada" }}</p>
+    <p><strong>WhatsApp:</strong> {{ user.whatsapp|default:"Informação ainda não cadastrada" }}</p>
+    <p><strong>Biografia:</strong> {{ user.biography|default:"Informação ainda não cadastrada" }}</p>
+    <p><strong>Como você me conhece:</strong> {{ user.how_you_know|default:"Informação ainda não cadastrada" }}</p>
+</div>
+
+<!-- Botões para Editar e Excluir -->
+<div class="text-center mt-4">
+    <a href="{% url 'profilegs:edit_profile' %}" class="btn btn-primary">Editar Perfil</a>
+    <form action="{% url 'profilegs:delete_account' %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Excluir Conta</button>
+    </form>
+</div>
+
+{% endblock content %}

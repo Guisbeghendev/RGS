@@ -1,0 +1,12 @@
+{% extends 'dashbase.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Excluir Conta</h2>
+    <p>Você tem certeza que deseja excluir sua conta, {{ user.nickname }}?</p>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Excluir Conta</button>
+    </form>
+</div>
+{% endblock %}

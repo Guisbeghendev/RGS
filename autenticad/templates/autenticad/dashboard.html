@@ -3,12 +3,43 @@
 
 {% block content %}
 
-<!-- boas vindas ao visitante -->
-<div class="text-center py-3 rounded">
-    <h6><dt>Bem-vindo(a), {{ user.nickname }}! <br>Aqui está sua Dashboard!</dt></h6>
-    <p>Aqui você poderá acessar suas informações de perfil e outros recursos.</p>
+<div class="row">
+    <div class="col-md-5 col-12 bg-secondary mb-3">
+
+        <!-- perfil -->
+        <br>
+        <div class="row align-items-center">
+            <div class="col-4 col-md-4 text-center d-flex justify-content-center">
+                {% if user.avatar %}
+                <img src="{{ user.avatar.url }}" alt="Avatar" style="width: 100%; max-width: 150px; height: auto;">
+                {% else %}
+                    <p>Este usuário ainda não possui avatar.</p>
+                {% endif %}
+            </div>
+            <div class="col-8 col-md-8 bg-secondary d-flex flex-column">
+                <div class="col text-light">
+                    <h6 class="monospace">
+                        <dl>
+                            <dt>Nome:</dt>
+                            <dd>{{ user.nickname|default:"Informação ainda não cadastrada" }}</dd>
+                            <dt>Cidade:</dt>
+                            <dd>{{ user.city|default:"Informação ainda não cadastrada" }}</dd>
+                            <dt>Estado:</dt>
+                            <dd>{{ user.state|default:"Informação ainda não cadastrada" }}</dd>
+                        </dl>
+                    </h6>
+                </div>
+                <div class="row text-center mt-2">
+                    <a href="{% url 'profilegs:profilegs' %}" class="btn btn-warning btn-lg">Ver Perfil Completo</a>
+                </div>
+            </div>
+        </div><br>
+
+    </div>
+
 </div>
-<!-- fim boas vindas ao visitante -->
+
+<br>
 
 <!-- conteudo da jumbotron dashboard -->
 <div class="jumbotron">

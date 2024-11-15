@@ -1,12 +1,14 @@
 from django.contrib.auth.models import AbstractUser, Group, Permission, BaseUserManager
 from django.db import models
+from .validators import validate_whatsapp
 
+# Gerenciador personalizado para o modelo CustomUser
 class CustomUserManager(BaseUserManager):
     def create_user(self, nickname, email, password=None, **extra_fields):
         if not email:
-            raise ValueError('O endereço de e-mail deve ser fornecido')
+            raise ValueError('O endereço de e-mail deve ser fornecido.')
         if not nickname:
-            raise ValueError('O nickname deve ser fornecido')
+            raise ValueError('O nickname deve ser fornecido.')
         
         email = self.normalize_email(email)
         user = self.model(nickname=nickname, email=email, **extra_fields)
@@ -25,9 +27,12 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(nickname, email, password, **extra_fields)
 
+# Modelo CustomUser que estende AbstractUser
 class CustomUser(AbstractUser):
     # Removendo o campo username herdado
     username = None
+    whatsapp = models.CharField(max_length=15, blank=True, null=True, validators=[validate_whatsapp])
+
 
     # Atualização da hierarquia de níveis
     HIERARCHY_LEVELS = [
@@ -39,11 +44,11 @@ class CustomUser(AbstractUser):
         (6, 'Família'),
     ]
     
-    level = models.PositiveSmallIntegerField(choices=HIERARCHY_LEVELS, default=1)  # Definindo o nível padrão como 1
-    user_level = models.PositiveSmallIntegerField(choices=HIERARCHY_LEVELS, default=1)  # Novo campo user_level
+    level = models.PositiveSmallIntegerField(choices=HIERARCHY_LEVELS, default=1)  # Nível do usuário
+    user_level = models.PositiveSmallIntegerField(choices=HIERARCHY_LEVELS, default=1)  # Nível do usuário (usuário comum)
     nickname = models.CharField(max_length=30, unique=True)  # Campo nickname obrigatório e único
     
-    # Novos campos a serem adicionados
+    # Campos adicionais
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)  # Campo de avatar
     age = models.PositiveIntegerField(blank=True, null=True)  # Campo de idade
     birth_date = models.DateField(blank=True, null=True)  # Campo de data de nascimento
@@ -51,19 +56,25 @@ class CustomUser(AbstractUser):
     biography = models.TextField(blank=True, null=True)  # Campo de biografia
     how_you_know = models.TextField(blank=True, null=True)  # Campo de como conhece
 
+    # Campos adicionais
+    whatsapp = models.CharField(max_length=15, blank=True, null=True)  # Campo de WhatsApp
+    state = models.CharField(max_length=100, blank=True, null=True)  # Campo de estado
+    address = models.TextField(blank=True, null=True)  # Campo de endereço
+
+    # Relacionamentos
     groups = models.ManyToManyField(
         Group,
-        related_name='customuser_set',  # Nome relacionado para o acesso reverso
+        related_name='customuser_set',
         blank=True,
-        help_text='The groups this user belongs to.',
-        verbose_name='groups'
+        help_text='Os grupos aos quais este usuário pertence.',
+        verbose_name='grupos'
     )
     user_permissions = models.ManyToManyField(
         Permission,
-        related_name='customuser_set',  # Nome relacionado para o acesso reverso
+        related_name='customuser_set',
         blank=True,
-        help_text='Specific permissions for this user.',
-        verbose_name='user permissions'
+        help_text='Permissões específicas para este usuário.',
+        verbose_name='permissões de usuário'
     )
 
     USERNAME_FIELD = 'nickname'  # Define 'nickname' como o campo de login

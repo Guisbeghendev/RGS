@@ -30,7 +30,7 @@ urlpatterns = [
     path('sobregs/', include('sobregs.urls', namespace='sobregs')),  # Namespace correto aqui
 
     # Incluindo as URLs do subapp profilegs
-    path('profilegs/', include('profilegs.urls', namespace='profilegs')),
+    path('profilegs/', include('profilegs.urls', namespace='profilegs')),  # Corrigido para usar 'profilegs'
 
     # Repositório Nível 1
     path('reposit/n1/', include('reposit.urls', namespace='reposit_n1')),
